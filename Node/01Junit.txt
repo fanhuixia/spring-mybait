@@ -1,0 +1,22 @@
+1. 引入junit jar包
+
+<dependency>
+    <groupId>junit</groupId>
+    <artifactId>junit</artifactId>
+    <version>4.12</version>
+    <scope>test</scope>
+</dependency>
+
+
+2. 编写测试用例
+
+public class Test1 {
+	Logger logger=Logger.getLogger(this.getClass());
+	@Test
+	public void test1() {
+		logger.info(":>>>>>>>>>>>>>>>>");
+	}
+	
+}
+
+使用@Test标注后，就可以启动Junit(java 单元测试)，来运行方法

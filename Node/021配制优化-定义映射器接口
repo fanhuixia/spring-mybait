@@ -1,0 +1,31 @@
+优化理由：
+	映射文件中 映射语句 使用id来标识，在使用的时候，必须是 namespace+ ID来查找，这样不仅长，而且容易出错（因为这就是一个字符串，通过编译的方式来检查错误）。
+	
+	
+优化：
+第1步：
+	可以定义一个mapper接口，这个接口所在的包就是namespace， 接口中定义的方法的名称就是id.
+	这个接口叫做映射器，它与mapper文件相关联
+	
+public interface StudentMapper {
+	public Student findById(Long id);
+}
+
+第2步：
+	在src/main/resources下建立于StudentMapper接口同样的目录结构，而且类名与文件名相同
+
+第3步：
+	在影射文件中的namespace与映射器接口的包名一致，id就是映射器中的方法名
+
+第4步：
+	在mybatis配制文件中，定义映射文件位置
+	
+  <mappers>
+
+  	<package name="cn.itlaobing.mapper"/>
+  		
+  </mappers>
+
+调用：
+ StudentMapper studentMapper=sqlSession.getMapper(StudentMapper.class);
+ Student student=studentMapper.findById(1L);	

@@ -1,0 +1,25 @@
+1. 编写业务类
+
+2. 在业务类的实现上添加 @Service 让Spring容器能够扫描到
+
+3. 在spring的配制文件中，指定扫描的包
+<context:annotation-config />
+<context:component-scan base-package="cn.itlaobing.service" />
+
+4. 事务控制，数据读取使用只读事务，曾，删，改需要进行事物控制。
+4.1 在Spring配置文件中配制：
+	<!-- 事务控制配置 -->
+	<!-- 1. 配置一个实物管理器，并注入 数据源 -->
+	<bean id="txManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+		<property name="dataSource" ref="dataSource"></property>
+	</bean>
+	<!-- 2. 打开事务控制的 annotation,并注入实物管理器 -->
+	<tx:annotation-driven transaction-manager="txManager"/>
+	
+4.2 在业务方法上添加annotation,进行事务控制
+
+@Transactional(readOnly=true)  //在只有查询的时候使用
+@Transactional  //在有数据更新的时候使用，如果遇到异常，事务会自动回滚
+
+5. 编写测试用例进行测试
+

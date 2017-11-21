@@ -1,0 +1,30 @@
+resultMap 节点：结果集映射
+	将JDBC查询的结果集中的字段映射到 实体类中的field
+	id: 映射的id，可以在后面的sql语句中反复使用（同一个namespace中必须是唯一的）
+	type： java类型
+
+
+sql节点： 保存常用的sql语句的一部分，后面可以使用它对sql进行拼接，注意id是唯一的。
+
+
+select节点： 查询语句都写在select节点中。
+	resultType属性：结果类型，一般是Java的实体类，此时要求结果集中的字段与java类中的field名称对应
+	resultMap属性： 自定义的结果集映射，属性的值就是resultMap节点的id。
+	*********resultMap与resultType不能同时使用*****************
+	
+    <include refid="Base_Column_List" />  将sql节点中保存的部分sql语句包含refid就是 sql节点定义的id
+   
+   
+delete节点: 生成delete语句
+
+insert节点： 生成insert语句
+	如何获取自动生成的主键值：在insert节点上添加两个属性
+	useGeneratedKeys="true"
+    keyProperty="id"   //对应的是实体类中表示主键值的field
+
+
+    trim 其实就是在动态拼写sql语句。 prefix 是前缀，生成的sql语句开头，suffix 是后缀，生成的sql语句结尾
+  			      suffixOverrides 去掉sql语句中最后一个对于的字符","
+
+	
+	

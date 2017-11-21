@@ -1,0 +1,86 @@
+1. 引入mybatisjar包
+<dependency>
+    <groupId>org.mybatis</groupId>
+    <artifactId>mybatis</artifactId>
+    <version>3.4.5</version>
+</dependency>
+
+2. MyBatis官方网站
+http://www.mybatis.org/mybatis-3/zh/index.html
+
+概念：
+MyBatis 是一款优秀的持久层框架，它支持定制化 SQL、存储过程以及高级映射
+
+持久化：把数据保存到持久化设备上。（磁盘，数据库）MyBatis就是一个数据持久化的框架，
+把数据“映射”到 数据库中。它的底层使用了JDBC技术。
+
+ORM： 对象关系映射，MyBatis也是一个ORM框架。
+
+
+3. 创建数据库，创建单表
+
+4. 新建单表所对应的类
+
+5. 引入MySql驱动程序
+<dependency>
+    <groupId>mysql</groupId>
+    <artifactId>mysql-connector-java</artifactId>
+    <version>5.1.38</version>
+</dependency>
+
+
+6. 在src/main/java/resources 新建 mybatis-config.xml文件
+内容到官方网站 http://www.mybatis.org/mybatis-3/zh/getting-started.html 中拷贝实例代码
+
+7. 在 src/main/java/resources/mapper中新建映射文件 studentMapper.xml
+这个映射文件中主要编写sql语句
+
+内容参考官方文档模板
+
+<mapper namespace="cn.itlaobing.mybatis.mapper.StudentMapper">  <!-- 将映射的SQL语句定义在一个名称空间中，避免重名 -->
+
+  <!-- select语句  id 在同一个namespace中必须是唯一的  -->
+  <select id="findById" parameterType="long"  resultType="cn.itlaobing.entity.Student">
+    select * from students where id = #{id}
+  </select>
+  
+  
+</mapper>
+
+7.1  **********重要步骤*********
+	需要将映射文件在  mybatis-config.xml中配制
+	
+  <mappers>
+  		<mapper resource="mapper/studentMapper.xml" />
+  </mappers>
+
+
+8. 新建一个测试用例，从数据库中取出数据
+
+8.1 创建SqlSessionFactory   session工厂，这里这个session 相当于JDBC中的connection,就是与数据库之间的链接
+要创建它，首先要加载配制文件，然后将配制文件交给 SqlSessionFactoryBuilder 进行创建
+
+InputStream inputStream = Resources.getResourceAsStream("mybatis-config.xml");
+SqlSessionFactory sqlSessionFactory = new SqlSessionFactoryBuilder().build(inputStream);
+
+8.2 通过SqlSessionFactory 对象获取 SqlSession对象（相当于与数据库的链接对象）
+SqlSession sqlSession=sqlSessionFactory.openSession();
+
+8.3 通过SqlSession 取出映射文件中的 sql映射（每一个sql映射上都有一个id，全称就是 namespace+id），然后执行获取数据
+Student student= sqlSession.selectOne("cn.itlaobing.mybatis.mapper.StudentMapper.findById",1L);
+
+8.4 关闭session
+sqlSession.close();
+
+
+
+
+
+
+
+
+
+
+
+
+

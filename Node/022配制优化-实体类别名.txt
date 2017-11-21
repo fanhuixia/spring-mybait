@@ -1,0 +1,28 @@
+优化理由：
+在映射文件中，如果用到了实体类，这个实体类必须写全名，这个 比较麻烦，可以为实体类定义别名
+
+别名定义：在mybatis配制文件中定义
+
+
+<typeAliases>节点，在这个节点中定义实体类的别名.
+typeAliases必须定义在 environments节点的前面
+
+  <typeAliases>
+  		<!-- 精确指定每个类型的别名 -->
+  		<!-- 
+  		<typeAlias type="cn.itlaobing.entity.Student" alias="student"/>
+  		 -->
+  		 
+  		 <!-- cn.itlaobing.entity这个包中的所有类型的 别名就是 类的短名称（不包含包名），首字母大小写都可以  -->
+  		<package name="cn.itlaobing.entity"/>
+  </typeAliases>
+  
+  
+  
+  
+  JDK中常用的类型  基本数据类型+String 的规则： 
+  	直接在文件中使用 类短名称， 首字母不区分大小写
+
+
+	
+
